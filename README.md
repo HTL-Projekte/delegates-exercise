@@ -1,58 +1,57 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/YLZ5T7KK)
-# Delegate Workshop — Student Exercise (C#)
+# Delegates Exercise – Lösung (kurz & übersichtlich)
 
-This exercise practices **delegates** and **higher-order functions** in C#.
+Diese Lösung zeigt die wichtigsten Delegate-Konzepte in C# in einer kompakten, testbaren Form.
 
-You will implement methods in `DelegatesExercise/DelegateTasks.cs` so that the unit tests pass.
+## Überblick
 
-## Learning goals
+- Eigener Delegate-Typ für Operationen mit zwei `int`-Werten
+- Übergabe von Funktionen an Methoden (Higher-Order Functions)
+- Nutzung von `Predicate`, `Func` und `Action`
+- Rückgabe von Funktionen (Closure und Komposition)
+- Einfaches Strategy-Prinzip für Preisberechnung
 
-By completing this exercise, you should be able to:
+## Was wurde umgesetzt?
 
-- Define your **own delegate type**
-- Create delegate **variables** and **invoke** them (`op(x, y)` and `op.Invoke(x, y)`)
-- Write methods that **take delegates as parameters** and call them (higher-order functions)
-- Use predefined delegate types:
-  - `Action` / `Action<T...>`
-  - `Func<...>`
-  - `Predicate<T>`
-- Use **lambda expressions** as delegate implementations
+### 1) Eigener Delegate
 
-## Project structure
+- `IntOperation` ist als Delegate mit Signatur `int (int x, int y)` definiert.
+- Damit können z. B. Addieren, Subtrahieren oder Multiplizieren einheitlich übergeben werden.
 
-- `DelegatesExercise/`  
-  Student project (you implement TODOs here)
+### 2) Delegate aufrufen
 
-- `DelegatesExercise.Solution/`  
-  Reference solution (for teachers / self-check)
+- `Apply(...)` ruft den Delegate direkt auf (`op(x, y)`).
+- `ApplyWithInvoke(...)` zeigt die äquivalente Variante mit `op.Invoke(x, y)`.
 
-- `DelegatesExercise.Tests/`  
-  xUnit unit tests.  
-  The tests are run **twice**:
-  - once against the student project (`DelegatesExercise`)
-  - once against the solution project (`DelegatesExercise.Solution`)  
-  This makes it easy to verify the tests themselves are correct.
+### 3) Berechnen und loggen
 
-## What to do
+- `CalculateAndLog(...)` führt die übergebene Operation aus,
+- protokolliert das Ergebnis als Text (`Result: ...`),
+- und gibt den berechneten Wert zurück.
 
-1. Open `DelegatesExercise/DelegateTasks.cs`
-2. Implement every `TODO` (remove `throw new NotImplementedException()`).
-3. Run the tests locally (example commands below).
+### 4) Standard-Delegates
 
-## Suggested workflow (local)
+- `Filter(...)` verwendet `Predicate<T>` zum Auswählen passender Elemente.
+- `Map(...)` verwendet `Func<T, TResult>` zum Umwandeln von Werten.
+- `ForEach(...)` verwendet `Action<T>` für Seiteneffekte pro Element.
 
-Requirements: **.NET SDK 8+**
+### 5) Funktionen zurückgeben
 
-From the folder that contains the solution:
+- `MakeMultiplier(...)` liefert eine Funktion zurück, die mit einem festen Faktor multipliziert (Closure).
+- `Compose(...)` verbindet zwei Funktionen zu einer neuen Funktion (`g(f(x))`).
+
+### 6) Strategy mit `Func`
+
+- `CalculatePrice(...)` erhält eine Rabatt-Strategie als Funktion.
+- Die Methode selbst bleibt generisch; die Preislogik kommt von außen.
+
+## Qualitätsaspekte der Lösung
+
+- Bei ungültigen Funktionsparametern werden `ArgumentNullException`s geworfen.
+- Alle Methoden sind klar getrennt und auf eine Aufgabe fokussiert.
+- Die Tests decken Verhalten und Signaturen vollständig ab.
+
+## Tests starten
 
 ```bash
 dotnet test
 ```
-
-## Notes / hints
-
-- Prefer writing small, readable methods.
-- Don’t overthink generics: the test names describe what each method should do.
-- Use `ArgumentNullException.ThrowIfNull(...)` where appropriate.
-
-Good luck 🙂
