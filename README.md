@@ -1,4 +1,4 @@
-# Delegates Exercise – Lösung (kurz & übersichtlich)
+# Delegates Exercise – Lösung
 
 Diese Lösung zeigt die wichtigsten Delegate-Konzepte in C# in einer kompakten, testbaren Form.
 
